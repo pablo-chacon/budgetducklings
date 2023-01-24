@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body>
+  <form>
+    <div>
+      <label>Username</label>
+      <input type="text" name="username" max="25" required>
+    </div>
+    <div>
+      <label>Password</label>
+      <input type="password" name="password" minlength="7" required>
+    </div>
+
+    <p if="${session.loginAttempts != null}">
+      Login attempts: <label text="${session.loginAttempts}"></label>
+    </p>
+
+    <button type="submit">Login</button><br>
+
+  </form>
+
+
+</body>
+</html>
