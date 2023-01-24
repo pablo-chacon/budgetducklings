@@ -15,9 +15,11 @@
       <input type="password" name="password" minlength="7" required>
     </div>
 
-    <p if="${session.loginAttempts != null}">
-      Login attempts: <label text="${session.loginAttempts}"></label>
-    </p>
+    <p th:if="${param.error != null}" th:text="${param.error}" />
+
+    <p th:if="${param.status != null}" th:text="${param.status}" />
+
+    <p th:if="${session.loginAttempts != null}" th:text="${'Login attempts: '+ session.loginAttempts}" />
 
     <button type="submit">Login</button><br>
 

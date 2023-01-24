@@ -57,6 +57,6 @@ public class UserSessionController {
     @PostMapping("logout")
     public String logout(HttpSession session) throws IOException {
         session.invalidate(); //Clear session.
-        return "redirect:/home.html";
+        return "redirect:/index.html";
     }
 }
