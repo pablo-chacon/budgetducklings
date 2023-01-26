@@ -23,7 +23,12 @@ public class ReceiptListService {
         return list;
     }
 
-    public void addShoppingItem(String name, Receipt receipt) {
-        receiptListRepository.addItem(name, receipt);
+    public void addInvoice(String name, Receipt receipt) {
+        receiptListRepository.addInvoice(name, receipt);
+    }
+
+    public void deleteInvoice(String name, Receipt receipt) {
+
+        receiptListRepository.deleteInvoice(name, receipt);
     }
 }

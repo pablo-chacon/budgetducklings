@@ -1,30 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login Page</title>
-</head>
-<body>
-  <form>
-    <div>
-      <label>Username</label>
-      <input type="text" name="username" max="25" required>
-    </div>
-    <div>
-      <label>Password</label>
-      <input type="password" name="password" minlength="7" required>
-    </div>
+<meta charset="UTF-8">
+<title>Duckling Home</title>
+<header>
+    <nav>
+        <a href="templates/home.html">Home</a><br>
+        <a href="templates/edit.html">New invoice</a><br>
+        <a href="templates/invoice.html">Edit previous invoice</a>
+    </nav>
+</header>
+<section>
+    <p>
+    </p>
+    <br>
+</section>
 
-    <p th:if="${param.error != null}" th:text="${param.error}" />
-
-    <p th:if="${param.status != null}" th:text="${param.status}" />
-
-    <p th:if="${session.loginAttempts != null}" th:text="${'Login attempts: '+ session.loginAttempts}" />
-
-    <button type="submit">Login</button><br>
-
-  </form>
-
-
-</body>
 </html>

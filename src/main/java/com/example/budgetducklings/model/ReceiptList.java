@@ -6,19 +6,23 @@ import java.util.List;
 public class ReceiptList {
 
     private List<Receipt> receiptList;
-    private String employee;
+    private String owner;
 
-    public ReceiptList(String employee) {
-        this.employee = employee;
+    public ReceiptList(String owner) {
+        this.owner = owner;
         this.receiptList = new ArrayList<>();
     }
 
-    public String getEmployee() {
-        return employee;
+    public String getOwner() {
+        return owner;
     }
 
     public List<Receipt> getReceiptList() {
         return receiptList;
+    }
+
+    public void deleteInvoice(String title) {
+        receiptList.remove(title);
     }
 
 }

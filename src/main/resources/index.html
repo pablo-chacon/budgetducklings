@@ -1,1 +1,29 @@
-<a href="/employee/login">Sign in</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Duckling Login page</title>
+</head>
+<body>
+<form>
+    <div>
+        <label>Login with Duckling credentials.</label><br>
+        <input type="text" name="name" max="25" required placeholder=" " value="Name">
+    </div>
+    <div>
+        <input type="password" name="password" minlength="5" required placeholder=" " value="Password">
+    </div>
+
+    <p th:if="${param.error != null}" th:text="${param.error}" />
+
+    <p th:if="${param.status != null}" th:text="${param.status}" />
+
+    <p th:if="${session.loginAttempts != null}" th:text="${'Login attempts: '+ session.loginAttempts}" />
+
+    <button type="submit"><a href="/templates/home.html">Go duck your self</a></button><br>
+
+</form>
+
+
+</body>
+</html>

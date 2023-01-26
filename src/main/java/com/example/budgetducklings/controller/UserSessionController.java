@@ -10,12 +10,12 @@ import com.example.budgetducklings.exception.*;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/employee/*")
+@RequestMapping("/userSession/*")
 public class UserSessionController {
 
 
     @ExceptionHandler(InvalidPswException.class)
-    public String handleInvalidPassword(InvalidPswException ex, HttpSession session, HttpServletRequest req) {
+    public String invalidPasswordAttempt(InvalidPswException ex, HttpSession session, HttpServletRequest req) {
 
         Object loginAttempts = session.getAttribute("loginAttempts");
         if(loginAttempts == null) {
@@ -40,8 +40,8 @@ public class UserSessionController {
             return "redirect:/receiptList";
         } else {
 
-            if(name.equals("bob")) {
-                if(password.equals("123")) {
+            if(name.equals("scrooge")) {
+                if(password.equals("foo123")) {
                     session.setMaxInactiveInterval(60 * 30);
                     session.setAttribute("name", name);
 

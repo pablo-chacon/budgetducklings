@@ -10,7 +10,7 @@ public class MySqlDb {
     private Connection connection;
 
     private MySqlDb() {
-        String url = "jdbc:mysql://localhost:3306/awshopping";
+        String url = "jdbc:mysql://localhost:3306/duckling";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

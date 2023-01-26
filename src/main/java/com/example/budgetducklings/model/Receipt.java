@@ -1,10 +1,12 @@
 package com.example.budgetducklings.model;
 
+import java.util.Date;
+
 public class Receipt {
 
 
     private String title;
-    private String dateOfPurchase;
+    private Date dateOfPurchase;
     private String description;
     private String category;
     private String price;
@@ -13,7 +15,7 @@ public class Receipt {
     public Receipt() {
     }
 
-    public Receipt(String title, String dateOfPurchase, String description, String category, String price) {
+    public Receipt(String title, Date dateOfPurchase, String description, String category, String price) {
         this.title = title;
         this.dateOfPurchase = dateOfPurchase;
         this.description = description;
@@ -29,11 +31,11 @@ public class Receipt {
         this.title = title;
     }
 
-    public String getDateOfPurchase() {
+    public Date getDateOfPurchase() {
         return dateOfPurchase;
     }
 
-    public void setDateOfPurchase(String dateOfPurchase) {
+    public void setDateOfPurchase(Date dateOfPurchase) {
         this.dateOfPurchase = dateOfPurchase;
     }
 

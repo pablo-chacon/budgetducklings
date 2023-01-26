@@ -4,10 +4,8 @@ import com.example.budgetducklings.db.MySqlDb;
 import com.example.budgetducklings.model.Receipt;
 import com.example.budgetducklings.model.ReceiptList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.HashMap;
 
 public class ReceiptListRepository {
 
@@ -21,9 +19,9 @@ public class ReceiptListRepository {
         Connection conn = db.getConnection();
         ReceiptList list = new ReceiptList(name);
         String sql = "" +
-                "SELECT * FROM shoppingLists " +
+                "SELECT * FROM receipts_tbl " +
                 "JOIN listOwners " +
-                "ON shoppingLists.ownerId=listOwners.id " +
+                "ON receiptsLists.ownerId=listOwners.id " +
                 "WHERE listOwners.name = ?";
 
         try {
@@ -38,7 +36,10 @@ public class ReceiptListRepository {
             do {
                 Receipt receipt = new Receipt();
                 receipt.setTitle(rs.getString("Title"));
-                receipt.setDateOfPurchase(rs.getString("Date"));
+                receipt.setDateOfPurchase(rs.getDate("Date"));
+                receipt.setCategory(rs.getString("Category"));
+                receipt.setPrice(rs.getString("Price"));
+                receipt.setDescription(rs.getString("Description"));
 
                 list.getReceiptList().add(receipt);
             } while(rs.next());
@@ -51,7 +52,7 @@ public class ReceiptListRepository {
         return list;
     }
 
-    public void addItem(String name, Receipt receipt) {
+    public void addInvoice(String name, Receipt receipt) {
         Connection conn = db.getConnection();
         String sql = "SELECT id FROM listEmployee WHERE name=?";
 
@@ -68,16 +69,16 @@ public class ReceiptListRepository {
                 employeeId = rs.getInt("id");
             }
 
-            sql = "INSERT INTO shoppingLists (employeeId, title, dateOfPurchase, category, price, description)" +
-                    "VALUES (?, ?, ?)";
+            sql = "INSERT INTO receiptsList (employeeId, receipt)" +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
 
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, employeeId);
-            pstmt.setString(2, receipt.getDateOfPurchase());
+            /*pstmt.setDate(2, (Date) receipt.getDateOfPurchase());
             pstmt.setString(3, receipt.getCategory());
             pstmt.setString(4, receipt.getPrice());
             pstmt.setString(5, receipt.getTitle());
-            pstmt.setString(6, receipt.getDescription());
+            pstmt.setString(6, receipt.getDescription());*/
 
             pstmt.execute();
 
@@ -86,13 +87,13 @@ public class ReceiptListRepository {
         }
     }
 
-    public int createNew(String username) {
+    public int createNew(String name) {
         Connection conn = db.getConnection();
         String sql = "INSERT INTO listOwners (name) VALUES (?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)){
 
-            stmt.setString(1, username);
+            stmt.setString(1, name);
             return stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -100,4 +101,17 @@ public class ReceiptListRepository {
         }
     }
 
+    public int deleteInvoice(String name, Receipt receipt) {
+        Connection conn = db.getConnection();
+        String sql = "DELETE FROM receipts_tbl (name) VALUES (receipt.getTitle())";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
+
+            stmt.setString(1, name);
+            return stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
