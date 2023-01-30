@@ -1,0 +1,23 @@
+
+<form action="templates/invoice.html" method="POST">
+    <div>
+        <label>Login with Duckling credentials.</label><br>
+        <input type="text" name="name" max="25" required placeholder="Name" value="">
+    </div>
+    <div>
+        <input type="password" name="password" minlength="5" required placeholder="Password" value="">
+    </div>
+
+    <p th:if="${param.error != null}" th:text="${param.error}" />
+
+    <p th:if="${param.status != null}" th:text="${param.status}" />
+
+    <p th:if="${session.loginAttempts != null}" th:text="${'Login attempts: '+ session.loginAttempts}" />
+
+    <button type="submit">Go duck your self</button><br>
+
+</form>
+
+
+</body>
+</html>

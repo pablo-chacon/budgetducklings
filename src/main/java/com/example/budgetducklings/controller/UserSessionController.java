@@ -1,5 +1,6 @@
 package com.example.budgetducklings.controller;
 
+import com.example.budgetducklings.model.EmployeeList;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -28,16 +29,16 @@ public class UserSessionController {
     }
 
 
-    @GetMapping("login")
+    @GetMapping("home")
     public String getLoginPage() {
-        return "loginPage";
+        return "home";
     }
 
-    @PostMapping("login")
+    @PostMapping("home")
     public String login(HttpSession session, RedirectAttributes redirect, @RequestParam String name, @RequestParam String password) {
 
         if(session.getAttribute("name") != null) {
-            return "redirect:/receiptList";
+            return "redirect:/home";
         } else {
 
             if(name.equals("scrooge")) {
@@ -45,18 +46,18 @@ public class UserSessionController {
                     session.setMaxInactiveInterval(60 * 30);
                     session.setAttribute("name", name);
 
-                    return "redirect:/receiptList";
+                    return "redirect:/invoice";
                 } else {
                     throw new InvalidPswException("Invalid password attempt", name);
                 }
             }
-            return "redirect:login";
+            return "redirect:/invoice";
         }
     }
 
     @PostMapping("logout")
     public String logout(HttpSession session) throws IOException {
         session.invalidate(); //Clear session.
-        return "redirect:/index.html";
+        return "redirect:home.html";
     }
 }

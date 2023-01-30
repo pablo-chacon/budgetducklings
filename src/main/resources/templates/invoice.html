@@ -1,28 +1,30 @@
 <!DOCTYPE html>
+
 <html lang="en">
- <head>
-     <meta charset="UTF-8">
-     <title>Duckling Login page</title>
- </head>
- <header>
-   <nav>
-     <a href="/templates/home.html">Home</a>
-     <a href="templates/invoice.html">New invoice</a>
-     <a href="templates/edit.html">Edit previous invoice</a>
-   </nav>
- </header>
- <body>
-   <meta charset="UTF-8">
-   <title>New invoice</title>
-   <br><label>Invoice data</label><br>
-   <input type="text" name="title" max="10" required placeholder=" " value="Title"><br>
-   <input type="date" name="date" required placeholder=" " value="Date"><br>
-   <input type="text" name="category" max="15" required placeholder=" " value="Category"><br>
-   <input type="text" name="price" max="6" required placeholder=" " value="Price"><br>
-   <textarea type="text" name="description" max="255" rows="10" cols="58">
-   </textarea><br>
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+</head>
+<header>
+    <nav>
+        <a href="/budgetducklings/home.html">Logout</a>
+        <a href="payment.html">New invoice</a>
+        <a href="edit.html">Edit previous.</a>
+    </nav>
+</header>
+<table>
+    <thead>
+      <tr><th>Title</th><th>Date</th><th>Category</th><th>Amount</th><th>Description</th></tr>
+    </thead>
 
-   <button>Save Invoice</button><br>
+    <tbody action="/invoice" method="GET">
+    <tr th:forEach var="receipt" items="${list}">
+        <td th:text="">
 
-</body>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
 </html>

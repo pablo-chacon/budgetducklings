@@ -10,42 +10,50 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-@Controller
-@RequestMapping("/receiptList")
+@RestController
 public class ReceiptListController {
 
     private ReceiptListService listService;
+    private HttpSession session;
+    private Receipt receipt;
 
     public ReceiptListController(){
         listService = new ReceiptListService();
     }
 
-    @GetMapping
-    protected String outputReceiptList(Model model, HttpSession session) {
+    @GetMapping("invoice")
+    protected Model outputReceiptList(Model model, HttpSession session) {
         String name = (String) session.getAttribute("name");
 
         ReceiptList receiptList = listService.getReceiptList(name);
 
         model.addAttribute("receipts", receiptList.getReceiptList());
 
-        return "receiptListPage";
+        return model;
     }
 
-    @PostMapping
-    public String newInvoice(HttpSession session, @ModelAttribute Receipt receipt) {
+    @PostMapping("payment")
+    public void newInvoice(HttpSession session, @ModelAttribute Receipt receipt) {
         String name = (String) session.getAttribute("name");
 
-        listService.addInvoice(name, receipt);
+        listService.createNew(name, receipt);
 
-        return "redirect:/receiptList";
     }
 
-    @DeleteMapping
+    @PutMapping("edit")
+    public void updateInvoice(HttpSession session, @ModelAttribute Receipt receipt) {
+        String name = (String) session.getAttribute("name");
+
+        listService.updateInvoice(name, receipt);
+
+    }
+
+    @DeleteMapping("delete")
     public void deleteInvoice(HttpSession session, @ModelAttribute Receipt receipt) {
         String name = (String) session.getAttribute("name");
 
-        listService.
-                addInvoice(name, receipt);
+        listService.deleteInvoice(name, receipt);
+
     }
 
 

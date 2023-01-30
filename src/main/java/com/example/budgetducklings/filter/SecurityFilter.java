@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebFilter("/invoice")
+@WebFilter("/home")
 public class SecurityFilter extends HttpFilter {
 
     @Override

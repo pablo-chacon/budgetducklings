@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Edit previous receipt</title>
 </head>
 <header>
     <nav>
-        <a href="/templates/home.html">Home</a>
-        <a href="templates/invoice.html">New invoice</a>
-        <a href="templates/edit.html">Edit previous invoice</a>
+        <a href="invoice.html">Your invoices</a>
+        <a href="payment.html">New invoice</a>
+        <a href="edit.html">Edit previous invoice</a>
     </nav>
 </header>
 <body>
-
+<form:form action="/edit/{id}" method="PUT" >
+    <br><label>Invoice data</label><br>
+    <input type="text" name="title" max="10" required placeholder=" " value="Title"><br>
+    <input type="date" name="date" required placeholder=" " value="Date"><br>
+    <input type="text" name="category" max="15" required placeholder=" " value="Category"><br>
+    <input type="text" name="price" maxlength="6" required placeholder=" " value="Price"><br>
+    <textarea type="text" name="description" max="255" rows="10" cols="58">
+   </textarea><br>
+</form:form>
 </body>
 </html>

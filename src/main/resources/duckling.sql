@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `duckling`.`ducklings_tbl` (
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`receipt_tbl`
+-- Table `duckling`.`receipt_tbl`
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `duckling`.`receipt_tbl` (
@@ -50,7 +50,7 @@ USE `duckling`;
 CREATE OR REPLACE VIEW view_receipts AS
 SELECT (ducklings_tbl.ducklingID) AS 'Col_placeholder1'
 FROM
-    (SELECT receiptID
+    (SELECT *
      FROM receipt_tbl) receipts
         INNER JOIN
     (SELECT ducklingID
@@ -65,10 +65,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 START TRANSACTION;
 USE `duckling`;
-INSERT INTO `duckling`.`ducklings_tbl` (`employeeid`, `name`, `password`, `email`) VALUES (DEFAULT, 'Scrooge', 'foo123', 'scrooge@duckling.duck');
-INSERT INTO `duckling`.`ducklings_tbl` (`employeeid`, `name`, `password`, `email`) VALUES (DEFAULT, 'Huey', 'bar321', 'huey@duckling.duck');
-INSERT INTO `duckling`.`ducklings_tbl` (`employeeid`, `name`, `password`, `email`) VALUES (DEFAULT, 'Dewey', 'foobar123', 'dewey@duckling.duck');
-INSERT INTO `duckling`.`ducklings_tbl` (`employeeid`, `name`, `password`, `email`) VALUES (DEFAULT, 'Louie', , 'louie@duckling.duck');
+INSERT INTO `duckling`.`ducklings_tbl` (`ducklingID`, `name`, `email`) VALUES (DEFAULT, 'Scrooge', 'foo123', 'scrooge@duckling.duck');
+INSERT INTO `duckling`.`ducklings_tbl` (`ducklingID`, `name`, `email`) VALUES (DEFAULT, 'Huey', 'bar123', 'huey@duckling.duck');
+INSERT INTO `duckling`.`ducklings_tbl` (`ducklingID`, `name`, `email`) VALUES (DEFAULT, 'Dewey', 'foobar', 'dewey@duckling.duck');
+INSERT INTO `duckling`.`ducklings_tbl` (`ducklingID`, `name`, `email`) VALUES (DEFAULT, 'Louie', 'barfoo', 'louie@duckling.duck');
 
 COMMIT;
 

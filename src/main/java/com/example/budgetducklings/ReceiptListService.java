@@ -3,8 +3,10 @@ package com.example.budgetducklings;
 import com.example.budgetducklings.model.Receipt;
 import com.example.budgetducklings.model.ReceiptList;
 import com.example.budgetducklings.repository.ReceiptListRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ReceiptListService {
+
 
     private ReceiptListRepository receiptListRepository;
 
@@ -23,12 +25,15 @@ public class ReceiptListService {
         return list;
     }
 
-    public void addInvoice(String name, Receipt receipt) {
-        receiptListRepository.addInvoice(name, receipt);
+    public void createNew(String name, Receipt receipt) {
+        receiptListRepository.createNew(name, receipt);
+    }
+
+    public void updateInvoice(String name, Receipt receipt) {
+        receiptListRepository.update(name, receipt);
     }
 
     public void deleteInvoice(String name, Receipt receipt) {
-
         receiptListRepository.deleteInvoice(name, receipt);
     }
 }

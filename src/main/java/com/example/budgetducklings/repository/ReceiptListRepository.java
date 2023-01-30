@@ -5,7 +5,6 @@ import com.example.budgetducklings.model.Receipt;
 import com.example.budgetducklings.model.ReceiptList;
 
 import java.sql.*;
-import java.util.HashMap;
 
 public class ReceiptListRepository {
 
@@ -16,12 +15,11 @@ public class ReceiptListRepository {
     }
 
     public ReceiptList getReceiptList(String name) {
-        Connection conn = db.getConnection();
+        Connection conn = db.getConn();
         ReceiptList list = new ReceiptList(name);
         String sql = "" +
-                "SELECT * FROM receipts_tbl " +
-                "JOIN listOwners " +
-                "ON receiptsLists.ownerId=listOwners.id " +
+                "SELECT * FROM view_receipts " +
+                "ON receiptsLists.employeeId=ducklingList.id " +
                 "WHERE listOwners.name = ?";
 
         try {
@@ -52,44 +50,23 @@ public class ReceiptListRepository {
         return list;
     }
 
-    public void addInvoice(String name, Receipt receipt) {
-        Connection conn = db.getConnection();
-        String sql = "SELECT id FROM listEmployee WHERE name=?";
+    public int createNew(String name, Receipt receipt) {
+        Connection conn = db.getConn();
+        String sql = "INSERT INTO reciept_tbl (name) VALUES (?)";
 
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, name);
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
 
-            ResultSet rs = pstmt.executeQuery();
-            int employeeId;
-
-            if(!rs.next()) { // Gå till första raden i query svaret
-                employeeId = this.createNew(name);
-            } else {
-                employeeId = rs.getInt("id");
-            }
-
-            sql = "INSERT INTO receiptsList (employeeId, receipt)" +
-                    "VALUES (?, ?, ?, ?, ?, ?)";
-
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, employeeId);
-            /*pstmt.setDate(2, (Date) receipt.getDateOfPurchase());
-            pstmt.setString(3, receipt.getCategory());
-            pstmt.setString(4, receipt.getPrice());
-            pstmt.setString(5, receipt.getTitle());
-            pstmt.setString(6, receipt.getDescription());*/
-
-            pstmt.execute();
+            stmt.setString(1, name);
+            return stmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public int createNew(String name) {
-        Connection conn = db.getConnection();
-        String sql = "INSERT INTO listOwners (name) VALUES (?)";
+    public int update(String name, Receipt receipt) {
+        Connection conn = db.getConn();
+        String sql = "INSERT INTO receipts_tbl (name) VALUES (?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)){
 
@@ -102,7 +79,7 @@ public class ReceiptListRepository {
     }
 
     public int deleteInvoice(String name, Receipt receipt) {
-        Connection conn = db.getConnection();
+        Connection conn = db.getConn();
         String sql = "DELETE FROM receipts_tbl (name) VALUES (receipt.getTitle())";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)){
