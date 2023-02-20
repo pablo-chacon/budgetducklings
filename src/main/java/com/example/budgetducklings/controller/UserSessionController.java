@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.budgetducklings.exception.*;
 
@@ -15,7 +16,7 @@ import java.io.IOException;
 public class UserSessionController {
 
 
-    @ExceptionHandler(InvalidPswException.class)
+   @ExceptionHandler(InvalidPswException.class)
     public String invalidPasswordAttempt(InvalidPswException ex, HttpSession session, HttpServletRequest req) {
 
         Object loginAttempts = session.getAttribute("loginAttempts");
@@ -29,16 +30,16 @@ public class UserSessionController {
     }
 
 
-    @GetMapping("home")
+    @GetMapping("login")
     public String getLoginPage() {
-        return "home";
+        return "loginPage";
     }
 
-    @PostMapping("home")
+    @PostMapping("login")
     public String login(HttpSession session, RedirectAttributes redirect, @RequestParam String name, @RequestParam String password) {
 
         if(session.getAttribute("name") != null) {
-            return "redirect:/home";
+            return "redirect:/receiptList";
         } else {
 
             if(name.equals("scrooge")) {
@@ -46,18 +47,18 @@ public class UserSessionController {
                     session.setMaxInactiveInterval(60 * 30);
                     session.setAttribute("name", name);
 
-                    return "redirect:/invoice";
+                    return "redirect:/receiptList/invoice";
                 } else {
                     throw new InvalidPswException("Invalid password attempt", name);
                 }
             }
-            return "redirect:/invoice";
+            return "redirect:/login";
         }
     }
 
     @PostMapping("logout")
     public String logout(HttpSession session) throws IOException {
         session.invalidate(); //Clear session.
-        return "redirect:home.html";
+        return "redirect:login";
     }
 }

@@ -10,17 +10,17 @@ public class ReceiptListRepository {
 
     private MySqlDb db;
 
+
     public ReceiptListRepository() {
         db = MySqlDb.getInstance();
     }
 
     public ReceiptList getReceiptList(String name) {
         Connection conn = db.getConn();
-        ReceiptList list = new ReceiptList(name);
+        ReceiptList ducklingList = new ReceiptList(name);
         String sql = "" +
-                "SELECT * FROM view_receipts " +
-                "ON receiptsLists.employeeId=ducklingList.id " +
-                "WHERE listOwners.name = ?";
+                "SELECT * FROM receipt_tbl " +
+                "WHERE ducklingList.name = ?";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -39,7 +39,7 @@ public class ReceiptListRepository {
                 receipt.setPrice(rs.getString("Price"));
                 receipt.setDescription(rs.getString("Description"));
 
-                list.getReceiptList().add(receipt);
+                ducklingList.getReceiptList().add(receipt);
             } while(rs.next());
 
 
@@ -47,7 +47,7 @@ public class ReceiptListRepository {
             throw new RuntimeException(e);
         }
 
-        return list;
+        return ducklingList;
     }
 
     public int createNew(String name, Receipt receipt) {
@@ -66,7 +66,7 @@ public class ReceiptListRepository {
 
     public int update(String name, Receipt receipt) {
         Connection conn = db.getConn();
-        String sql = "INSERT INTO receipts_tbl (name) VALUES (?)";
+        String sql = "INSERT INTO receipt_tbl (name) VALUES (?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)){
 
@@ -78,14 +78,14 @@ public class ReceiptListRepository {
         }
     }
 
-    public int deleteInvoice(String name, Receipt receipt) {
+    public void deleteInvoice(String name, Receipt receipt) {
         Connection conn = db.getConn();
-        String sql = "DELETE FROM receipts_tbl (name) VALUES (receipt.getTitle())";
+        String sql = "DELETE FROM receipt_tbl WHERE name=?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)){
 
             stmt.setString(1, name);
-            return stmt.executeUpdate();
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

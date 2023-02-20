@@ -18,7 +18,6 @@ public class ReceiptListService {
         ReceiptList list = receiptListRepository.getReceiptList(name);
 
         if(list == null) {
-            //listRepository.createNew(name);
             list = new ReceiptList(name);
         }
 

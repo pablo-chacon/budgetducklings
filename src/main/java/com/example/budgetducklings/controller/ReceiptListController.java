@@ -8,9 +8,12 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
-@RestController
+@Controller
+@EnableWebMvc
+@RequestMapping("/receiptList/")
 public class ReceiptListController {
 
     private ReceiptListService listService;
@@ -22,14 +25,14 @@ public class ReceiptListController {
     }
 
     @GetMapping("invoice")
-    protected Model outputReceiptList(Model model, HttpSession session) {
+    protected ReceiptList outputReceiptList(Model model, HttpSession session) {
         String name = (String) session.getAttribute("name");
 
         ReceiptList receiptList = listService.getReceiptList(name);
 
-        model.addAttribute("receipts", receiptList.getReceiptList());
+        model.addAttribute(name, receiptList.getReceiptList());
 
-        return model;
+        return receiptList;
     }
 
     @PostMapping("payment")
@@ -40,7 +43,7 @@ public class ReceiptListController {
 
     }
 
-    @PutMapping("edit")
+    @PutMapping("update")
     public void updateInvoice(HttpSession session, @ModelAttribute Receipt receipt) {
         String name = (String) session.getAttribute("name");
 

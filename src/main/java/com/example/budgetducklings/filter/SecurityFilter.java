@@ -1,4 +1,4 @@
-package com.example.budgetducklings.filter;
+/*package com.example.budgetducklings.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebFilter("/home")
+@WebFilter("/login")
 public class SecurityFilter extends HttpFilter {
 
     @Override
@@ -21,4 +21,6 @@ public class SecurityFilter extends HttpFilter {
         }
     }
 }
+
+ */
 

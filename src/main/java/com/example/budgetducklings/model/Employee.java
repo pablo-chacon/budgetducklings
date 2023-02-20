@@ -1,32 +1,25 @@
 package com.example.budgetducklings.model;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable {
 
 
-    private long id;
-    private String name;
+    private static final long serialVersionUID = 1;
+    private String username;
     private String password;
 
-    public Employee(long id, String name, String password) {
-        this.id = this.id;
-        this.name = name;
+    public Employee(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public String getPassword() {
@@ -38,7 +31,9 @@ public class Employee {
     }
 
     public String toString() {
-        return "Welcome back " + name;
+        return "Welcome back " + username;
     }
 
 }
+
+
