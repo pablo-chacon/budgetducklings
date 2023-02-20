@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Controller
 @EnableWebMvc
-@RequestMapping("/receiptList/")
+@RequestMapping("/home/")
 public class ReceiptListController {
 
     private ReceiptListService listService;
