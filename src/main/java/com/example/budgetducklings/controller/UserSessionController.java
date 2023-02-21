@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.budgetducklings.exception.*;
 
@@ -39,7 +39,7 @@ public class UserSessionController {
     public String login(HttpSession session, RedirectAttributes redirect, @RequestParam String name, @RequestParam String password) {
 
         if(session.getAttribute("name") != null) {
-            return "redirect:/receiptList";
+            return "redirect:/home/invoice";
         } else {
 
             if(name.equals("scrooge")) {
@@ -47,12 +47,12 @@ public class UserSessionController {
                     session.setMaxInactiveInterval(60 * 30);
                     session.setAttribute("name", name);
 
-                    return "redirect:/receiptList/invoice";
+                    return "redirect:home/invoice";
                 } else {
                     throw new InvalidPswException("Invalid password attempt", name);
                 }
             }
-            return "redirect:/login";
+            return "redirect:/userSession/login";
         }
     }
 

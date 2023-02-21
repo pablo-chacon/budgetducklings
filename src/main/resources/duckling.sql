@@ -5,15 +5,15 @@ USE `duckling` ;
 -- Table `duckling`.`employee_tbl`
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `ducklings_tbl` (
+CREATE TABLE IF NOT EXISTS ducklings_tbl (
     `ducklingID` INT NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(45) NOT NULL,
     `password` VARCHAR(45) DEFAULT NULL,
     `email` VARCHAR(45) NOT NULL,
     PRIMARY KEY (username),
-    CONSTRAINT `fk_duckling_1`
-    FOREIGN KEY (`ducklingID`)
-    REFERENCES `receipt_tbl` (`receiptID`)
+    INDEX (username),
+    FOREIGN KEY (`username`)
+    REFERENCES receipt_tbl (`receiptID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB;
@@ -23,29 +23,22 @@ CREATE TABLE IF NOT EXISTS `ducklings_tbl` (
 -- Table `duckling`.`receipt_tbl`
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `receipt_tbl` (
+CREATE TABLE IF NOT EXISTS receipt_tbl (
     `receiptID` INT NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(25) NULL,
     `date` DATE NOT NULL,
     `category` VARCHAR(15) NULL,
     `price` VARCHAR(8) NOT NULL,
     `description` VARCHAR(255) NULL,
-    PRIMARY KEY (`receiptID`),
-    CONSTRAINT `fk_receipt`
+    PRIMARY KEY (`date`),
     FOREIGN KEY (`receiptID`)
-    REFERENCES `ducklings_tbl` (`ducklingID`)
+    REFERENCES ducklings_tbl (`username`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB;
 
 USE `duckling` ;
 
--- -----------------------------------------------------
--- Placeholder table for view `duckling`.`view_receipts`
--- -----------------------------------------------------
-
-
--- Duckling data.
 
 START TRANSACTION;
 USE `duckling`;

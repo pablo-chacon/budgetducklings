@@ -8,39 +8,37 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @Controller
-@EnableWebMvc
 @RequestMapping("/home/")
 public class ReceiptListController {
 
     private ReceiptListService listService;
-    private HttpSession session;
-    private Receipt receipt;
+    private static final String VIEW_USER_RECEIPTS = "userSession/home/invoice";
+
 
     public ReceiptListController(){
         listService = new ReceiptListService();
     }
 
     @GetMapping("invoice")
-    protected ReceiptList outputReceiptList(Model model, HttpSession session) {
+    protected String outputReceiptList(Model model, HttpSession session) {
         String name = (String) session.getAttribute("name");
 
         ReceiptList receiptList = listService.getReceiptList(name);
 
         model.addAttribute(name, receiptList.getReceiptList());
 
-        return receiptList;
+        return VIEW_USER_RECEIPTS;
     }
 
     @PostMapping("payment")
-    public void newInvoice(HttpSession session, @ModelAttribute Receipt receipt) {
+    public String newInvoice(HttpSession session, @ModelAttribute Receipt receipt) {
         String name = (String) session.getAttribute("name");
 
         listService.createNew(name, receipt);
-
+        return VIEW_USER_RECEIPTS;
     }
 
     @PutMapping("update")
